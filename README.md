@@ -1,1 +1,1 @@
-# django_crm
+A django jira like ticketing system
