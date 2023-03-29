@@ -1,32 +1,24 @@
 from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
-import forms
+from django.views.generic.edit import CreateView
+from . import forms
 
 # Create your views here.
 
 def home(request):
     return render(request, 'home.html')
 
-def signup(request):
-    if request.method == 'POST':
-        # create a form instance and populate it with data from the request:
-        form = forms.CustomUserCreationForm(request.POST)
-        # check whether it's valid:
-        if form.is_valid():
+class SignUpView(CreateView):
+    form_class = forms.CustomUserCreationForm
+    success_url = reverse_lazy("login")
+    template_name = "registration/signup.html"
 
-            return HttpResponseRedirect('/thanks/')
-
-        # if a GET (or any other method) we'll create a blank form
-    else:
-        form = forms.CustomUserCreationForm()
-
-    return render(request, 'name.html', {'form': form})
-
-def signin(request):
-    return render(request, 'signin.html')
+def login(request):
+    return render(request, 'login.html')
 
 def ticket_view(request):
-    return render(request, 'ticket_view.html')
+    return render(request, 'ticket_create.html')
 
 def ticket_create(request):
     return render(request, 'ticket_create.html')
